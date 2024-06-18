@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdministrationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/SEC_0014', [AdministrationController::class, 'index'])->name('SEC_0014.index');
+Route::get('/SEC_0003', [AdministrationController::class, 'index'])->name('SEC_0003.index');
+
 
 require __DIR__.'/auth.php';
 
