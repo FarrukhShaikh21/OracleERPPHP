@@ -19,10 +19,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin.index');
-    // return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//  return view('admin.index');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware(['auth','verified'])->group(function () {
+    Route::get('/dashboard', [AdministrationController::class, 'dashboard'])->name('dashboard');
+});
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

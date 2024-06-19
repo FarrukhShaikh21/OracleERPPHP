@@ -9,6 +9,7 @@
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
         </div>
     </div>
+   
     <!--navigation-->
     <ul class="metismenu" id="menu">
 
@@ -16,7 +17,7 @@
             <a href="widgets.html">
                 <div class="parent-icon"><i class='bx bx-home-alt'></i>
                 </div>
-                <div class="menu-title">Dashboard</div>
+                <div class="menu-title">Dashboard {{session('SideBarMenu')}}</div>
             </a>
         </li>
 
@@ -39,10 +40,19 @@
                         <div class="menu-title">Administration</div>
                     </a>
                     <ul>
+                   @php 
+                   $menudata=Illuminate\Support\Facades\DB::select("select 1 as rn,'M1' as nam union select 2, 'M2' as nam");
+                   @endphp       
+                    
+                    @foreach($menudata as $md)
+                    <li> <a href="{{$md->nam}}"><i class='bx bx-radio-circle'></i>{{$md->nam.$md->rn}}</a>
+                    </li>
+                    @endforeach
                         <li> <a href="{{route('SEC_0014.index')}}"><i class='bx bx-radio-circle'></i>General Value</a>
                         </li>
                         <li> <a href="{{route('SEC_0003.index')}}"><i class='bx bx-radio-circle'></i>Users</a>
                         </li>
+                  
 
                     </ul>
                 </li>
