@@ -9,7 +9,15 @@
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
         </div>
     </div>
-   
+    @php
+        $abc = session('SideBarMenu');
+        if ($abc == 'true') {
+            $abc = 'wow';
+        } else {
+            $abc = 'not match';
+        }
+
+    @endphp
     <!--navigation-->
     <ul class="metismenu" id="menu">
 
@@ -17,11 +25,11 @@
             <a href="widgets.html">
                 <div class="parent-icon"><i class='bx bx-home-alt'></i>
                 </div>
-                <div class="menu-title">Dashboard {{session('SideBarMenu')}}</div>
+                <div class="menu-title">Dashboard {{ $abc }}</div>
             </a>
         </li>
 
-            {{-- @php
+        {{-- @php
             dd('hello');
             @endphp --}}
 
@@ -33,29 +41,42 @@
             </a>
             <ul>
                 {{--  --}}
-                <li>
-                    <a href="javascript:;" class="has-arrow">
-                        <div class="parent-icon"><i class="bx bx-category"></i>
-                        </div>
-                        <div class="menu-title">Administration</div>
-                    </a>
-                    <ul>
-                   @php 
-                   $menudata=Illuminate\Support\Facades\DB::select("select 1 as rn,'M1' as nam union select 2, 'M2' as nam");
-                   @endphp       
+                @php
+                $userid=Illuminate\Support\Facades\Auth::user()->user_id;
+                            $menumodule = Illuminate\Support\Facades\DB::select(
+                                "select module_id,module_description 
+                                from sys_module m
+                                where exists(select '' from vw_sys_users_module um where user_id=$userid and um.module_id=m.module_id)
+                                and module_active='Y' order by sequence");
+                        @endphp
                     
-                    @foreach($menudata as $md)
-                    <li> <a href="{{$md->nam}}"><i class='bx bx-radio-circle'></i>{{$md->nam.$md->rn}}</a>
-                    </li>
-                    @endforeach
-                        <li> <a href="{{route('SEC_0014.index')}}"><i class='bx bx-radio-circle'></i>General Value</a>
-                        </li>
-                        <li> <a href="{{route('SEC_0003.index')}}"><i class='bx bx-radio-circle'></i>Users</a>
-                        </li>
-                  
+                    @foreach ($menumodule as $erpmodule)
+                <li>
+                        
+                        <a href="javascript:;" class="has-arrow">
+                            <div class="parent-icon"><i class="bx bx-category"></i>
+                            </div>
+                            <div class="menu-title">{{$erpmodule->module_description}}</div>
+                        </a>
 
+                    <ul>
+
+                            @php
+                            $moduleid=$erpmodule->module_id;
+                            $menudata = Illuminate\Support\Facades\DB::select(
+                                "select ACTION_RUNTIME,ACTION_NAME from vw_sys_users_module where module_id='$moduleid' and active='Y' and is_allow='Y' and user_id=$userid order by seq");
+                            @endphp
+
+                        @foreach ($menudata as $md)
+                            <li> <a href="{{$md->ACTION_RUNTIME}}"><i
+                                        class='bx bx-radio-circle'></i>{{ $md->ACTION_NAME }}</a>
+                            </li>
+                        @endforeach
+                          
                     </ul>
+                   
                 </li>
+                 @endforeach
                 {{--  --}}
 
             </ul>
@@ -71,7 +92,7 @@
                 <div class="menu-title">eCommerce</div>
             </a>
             <ul>
-                <li> <a href="{{route('SEC_0003.index')}}"><i class='bx bx-radio-circle'></i>Products</a>
+                <li> <a href="route('SEC_0003.index')"><i class='bx bx-radio-circle'></i>Products</a>
                 </li>
                 <li> <a href="ecommerce-products-details.html"><i class='bx bx-radio-circle'></i>Product Details</a>
                 </li>

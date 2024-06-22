@@ -29,7 +29,7 @@
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
    <!-- toastr CSS -->
 
-	<title>Admin Dashboard </title>
+	<title>{{session()->has("g_user_access")?session()->get("g_user_access")[0]->ACTION_NAME:'Admin Dashboard'}} </title>
 </head>
 
 <body>

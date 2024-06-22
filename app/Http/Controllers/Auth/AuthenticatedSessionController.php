@@ -41,9 +41,9 @@ class AuthenticatedSessionController extends Controller
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();
-
+        $session=session();
         $request->session()->regenerateToken();
-
+        $session->flush();
         return redirect('/');
     }
   

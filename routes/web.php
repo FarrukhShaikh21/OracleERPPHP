@@ -36,9 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/SEC_0014', [AdministrationController::class, 'index'])->name('SEC_0014.index');
-Route::get('/SEC_0003', [AdministrationController::class, 'index'])->name('SEC_0003.index');
-
+Route::middleware('useraccess:viewallow')->group(function () {
+Route::get('/sec/{sec}', [AdministrationController::class, 'index'])->name('SEC_0014.index');
+// Route::get('/SEC_0003', [AdministrationController::class, 'index'])->name('SEC_0003.index');
+// Route::get('/SEC_0004', [AdministrationController::class, 'index'])->name('SEC_0004.index');
+// Route::get('/SEC_0013', [AdministrationController::class, 'index'])->name('SEC_0013.index');
+});
 
 require __DIR__.'/auth.php';
 
