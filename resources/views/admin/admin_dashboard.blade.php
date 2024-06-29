@@ -28,8 +28,12 @@
 	<!-- toastr CSS -->
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
    <!-- toastr CSS -->
+	
+	<!-- dataTables CSS -->
+   <link rel="stylesheet" href="{{asset('backend/assets/plugins/datatable/css/dataTables.bootstrap5.min.css')}}"/>
+   <!-- dataTables CSS -->
 
-	<title>{{session()->has("g_user_access")?session()->get("g_user_access")[0]->ACTION_NAME:'Admin Dashboard'}} </title>
+	<title>{{session()->get("g_user_access")==null?'Admin Dashboard':session()->get("g_user_access")[0]->ACTION_NAME}} </title>
 </head>
 
 <body>
@@ -110,7 +114,15 @@
  @endif 
 </script>
 
-
+<!--datatable JS-->
+<script src="{{asset('backend/assets/plugins/datatable/js/jquery.dataTables.min.js')}}"></script>
+	<script src="{{asset('backend/assets/plugins/datatable/js/dataTables.bootstrap5.min.js')}}"></script>
+	<script>
+		$(document).ready(function() {
+			$('#example').DataTable();
+		  } );
+	</script>
+<!--datatable JS-->
 </body>
 
 </html>
