@@ -43,13 +43,13 @@ Route::get('/sec/{sec}', [AdministrationController::class, 'index'])->name('SEC.
 // Route::get('/SEC_0013', [AdministrationController::class, 'index'])->name('SEC_0013.index');
 });
 
-//Route::middleware('useraccess:editallow')->group(function () {
+Route::middleware('useraccess:editallow')->group(function () {
     Route::get('/sec/edit/{sec}/{id}', [AdministrationController::class, 'edit'])->name('SEC.edit');
     // Route::get('/SEC_0003', [AdministrationController::class, 'index'])->name('SEC_0003.index');
     // Route::get('/SEC_0004', [AdministrationController::class, 'index'])->name('SEC_0004.index');
     // Route::get('/SEC_0013', [AdministrationController::class, 'index'])->name('SEC_0013.index');
-  //  });
+    });
 
-    
+    Route::post('sec/{SEC}/update', [AdministrationController::class, 'update'])->name('SEC.update');    
 require __DIR__.'/auth.php';
 

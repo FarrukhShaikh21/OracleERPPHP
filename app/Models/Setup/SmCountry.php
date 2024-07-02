@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class SmCountry extends Model
 {
     use HasFactory;
+    protected $table='sm_country';
+
+    public function getCountryList(){
+        return $this->orderBy('countryname')->get();
+    }
+    
 }

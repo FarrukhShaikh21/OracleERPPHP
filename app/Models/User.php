@@ -21,9 +21,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'CNIC_NO',
+        'MOBILE_NO',
+        'DOB',
+        'COUNTRY_SNO',
+        'GENDER_SNO',
+        'ALLOWED_IP_ADDRESS'
     ];
     
-    protected $primaryKey = 'user_id';
+    protected $primaryKey = 'USER_ID';
     protected $table='sys_users';
 
     /**
@@ -46,4 +52,8 @@ class User extends Authenticatable
     ];
 
 
+    public function getAuthPassword()
+    {
+        return $this->PASSWORD;
+    }
 }

@@ -360,7 +360,7 @@
             </div>
 
             @php
-                $id = Auth::user()->user_id;
+                $id = Auth::user()->USER_ID;
                 $profileData = App\Models\User::find($id);
 
             @endphp
@@ -371,8 +371,8 @@
                     <img src="{{ !empty($profileData->picture_name) ? url('upload/admin_images/' . $profileData->picture_name) : url('upload/no_image.jpg') }}"
                         class="user-img" alt="user avatar">
                     <div class="user-info">
-                        <p class="user-name mb-0">{{ $profileData->first_name }}</p>
-                        <p class="designattion mb-0">{{ $profileData->email }}</p>
+                        <p class="user-name mb-0">{{ $profileData->FIRST_NAME }}</p>
+                        <p class="designattion mb-0">{{ $profileData->EMAIL }}</p>
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">

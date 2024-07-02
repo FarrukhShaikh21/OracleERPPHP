@@ -42,7 +42,7 @@
             <ul>
                 {{--  --}}
                 @php
-                $userid=Illuminate\Support\Facades\Auth::user()->user_id;
+                $userid=Illuminate\Support\Facades\Auth::user()->USER_ID;
                             $menumodule = Illuminate\Support\Facades\DB::select(
                                 "select module_id,module_description 
                                 from sys_module m

@@ -37,12 +37,12 @@
                     @foreach ($tabledata as $key=> $record ) 
                         <tr>
                             <td>{{ $key+1 }}</td>
-                             <td>{{ $record->user_code }}</td>
-                             <td>{{ $record->user_name }}</td>
-                             <td>{{ $record->email }}</td>
-                            <td>{{ $record->mobile_no }}</td>
-                             <td>{{ $record->is_lock }}</td>
-                            <td>  <a href="/sec/edit/SEC_0003_EDIT/{{$record->user_id}}" class="btn btn-link px-3"> Edit</a>
+                             <td>{{ $record->USER_CODE }}</td>
+                             <td>{{ $record->USER_NAME }}</td>
+                             <td>{{ $record->EMAIL }}</td>
+                            <td>{{ $record->MOBILE_NO }}</td>
+                             <td>{{ $record->IS_LOCK }}</td>
+                            <td>  <a href="/sec/edit/SEC_0003_EDIT/{{$record->USER_ID}}" class="btn btn-link px-3"> Edit</a>
                             </td>
                         </tr>
                     @endforeach  

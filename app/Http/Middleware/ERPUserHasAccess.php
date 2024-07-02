@@ -17,13 +17,33 @@ class ERPUserHasAccess
      */
     public function handle(Request $request, Closure $next,$useraccess): Response
     {
-        $userid=Auth::user()->user_id;
-        $moduleaction=substr($request->getPathInfo(),-8);
+        $moduleaction=$request->getPathInfo();
+
+        if($useraccess=='editallow')
+        {
+            $path=strrev($moduleaction);
+            $path=substr($moduleaction,0,strlen($moduleaction)-strpos($path,'/'));
+            $moduleaction=basename($path) ."<br/>";
+            $moduleaction=substr($moduleaction,0,8);
+        }
+        else
+        {
+            $moduleaction=substr($request->getPathInfo(),-8);
+        }
+        // dd($moduleaction);
+
         $menumodule =(new AdministrationController)->getmoduleActionRights($request,$moduleaction);
-         
+        //  DD($menumodule);
         if($menumodule==null)
         {
             return redirect('dashboard');   
+        }
+        
+        // dd($useraccess);
+        if($useraccess=='editallow' && $menumodule[0]->ALLOW_EDIT=='N')
+        {
+            return redirect('dashboard');
+
         }
         // dd(substr($request->getPathInfo(),-8));
         return $next($request);
