@@ -58,20 +58,50 @@ class AdministrationController extends Controller
         //public function update(ContactRequest $request, Contact $contact)
        // {
         
+       $validatedData = $request->validate([
+        'CNIC_NO' => 'required|min:13|max:13'
+    ]);
     //    dd($request->getPathInfo());
             // $request->validate($this->rules());
             $record=User::findOrFail($request->USER_ID);
             // DD($record);
+            //  dd($request);
             $record->update([
-                'CNIC_NO'       => $request->CNIC_NO,
-                'MOBILE_NO'     => $request->MOBILE_NO,
-                'DOB'           => $request->DOB,
-                'COUNTRY_SNO'   => $request->COUNTRY_SNO,
-                'GENDER_SNO'   => $request->GENDER_SNO,
-                'ALLOWED_IP_ADDRESS' =>$request->ALLOWED_IP_ADDRESS
-            ]);
+                'USER_NAME'       => $request->FIRST_NAME.' '.$request->LAST_NAME,
+                'IS_LOCK'         => $request->IS_LOCK,
+                'USER_CODE'       => $request->USER_CODE,
+                'SCAN_PATH'       => $request->SCAN_PATH,
+                'SAVE_PATH'       => $request->SAVE_PATH,
+                'CNIC_NO'         => $request->CNIC_NO,
+                'FIRST_NAME'      => $request->FIRST_NAME,
+                'LAST_NAME'       => $request->LAST_NAME,
+                'MOBILE_NO'       => $request->MOBILE_NO,
+                'PHONE_NO'        => $request->PHONE_NO,
+                'DOB'             => $request->DOB,
+                'COUNTRY_SNO'     => $request->COUNTRY_SNO,
+                'CITY_SNO'        => $request->CITY_SNO,
+                'GENDER_SNO'      => $request->GENDER_SNO,
+                'ALLOWED_IP_ADDRESS' =>$request->ALLOWED_IP_ADDRESS,
+                'EMAIL'           =>$request->EMAIL,
+                'LOCK_DATE'       =>$request->LOCK_DATE,
+                'USER_TYPE_SNO'   =>$request->USER_TYPE_SNO,
+                'ACCESS_TYPE'     =>$request->ACCESS_TYPE,
+                'REMARKS'         =>$request->REMARKS,
+                'LAST_LOGIN_DATE' =>$request->LAST_LOGIN_DATE,
+                'IS_EXPIRED'      =>$request->IS_EXPIRED,
+                'EXPIRY_DATE'     =>$request->EXPIRY_DATE
+                 
+                
 
-            return redirect('sec/SEC_0003');
+
+            ]);
+            
+            $notification = array(
+                'message' => 'User Data Updated Successfully',
+                'alert-type' => 'success'
+            );
+
+            return redirect('sec/SEC_0003')->with($notification);
 
         // dd($request);
         // $request->validate($this->rules());

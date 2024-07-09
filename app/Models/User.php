@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function UserPasswordPolicy()
+    {
+        return $this->hasMany(SysUserPasswordPolicy::class,'USER_SNO','USER_SNO');
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -19,14 +23,32 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'EMAIL',
         'password',
         'CNIC_NO',
         'MOBILE_NO',
         'DOB',
         'COUNTRY_SNO',
         'GENDER_SNO',
-        'ALLOWED_IP_ADDRESS'
+        'ALLOWED_IP_ADDRESS',
+        'SCAN_PATH',
+        'SAVE_PATH',
+        'FIRST_NAME',
+        'LAST_NAME',
+        'IS_LOCK',
+        'USER_CODE',
+        'USER_NAME',
+        'PHONE_NO',
+        'COUNTRY_SNO',
+        'CITY_SNO',
+        'LOCK_DATE',
+        'USER_TYPE_SNO',
+        'ACCESS_TYPE',
+        'REMARKS',
+        'LAST_LOGIN_DATE',
+        'IS_EXPIRED',
+        'EXPIRY_DATE'
+
     ];
     
     protected $primaryKey = 'USER_ID';
