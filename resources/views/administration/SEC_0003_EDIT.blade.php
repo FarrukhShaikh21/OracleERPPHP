@@ -25,7 +25,7 @@
                                         <div class="d-flex align-items-center">
                                             <div class="tab-icon"><i class="bx bx-user-pin font-18 me-1"></i>
                                             </div>
-                                            <div class="tab-title">Room Number</div>
+                                            <div class="tab-title">Password Policy</div>
                                         </div>
                                     </a>
                                 </li>
@@ -315,6 +315,7 @@
                                     <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
                                         <div class="card">
                                             <div class="card-body">
+                                               
 
                                             </div>
                                         </div>
@@ -331,4 +332,19 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var counter = 0;
+            $(document).on("click", ".addeventmore", function() {
+                var whole_extra_item_add = $("#whole_extra_item_add").html();
+                $(this).closest(".add_item").append(whole_extra_item_add);
+                counter++;
+            });
+            $(document).on("click", ".removeeventmore", function(event) {
+                $(this).closest("#basic_facility_section_remove").remove();
+                counter -= 1
+            });
+        });
+    </script>
 @endsection
