@@ -1,130 +1,144 @@
-<div class="sidebar-wrapper" data-simplebar="true">
-    <div class="sidebar-header">
-        <div>
-            <img src="{{ asset('backend/assets/images/logo-icon.png') }}" class="logo-icon" alt="logo icon">
-        </div>
-        <div>
-            <h4 class="logo-text">Easy</h4>
-        </div>
-        <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
-        </div>
-    </div>
-    @php
-        $abc = session('SideBarMenu');
-        if ($abc == 'true') {
-            $abc = 'wow';
-        } else {
-            $abc = 'not match';
-        }
+ <div class="vertical-menu">
 
-    @endphp
-    <!--navigation-->
-    <ul class="metismenu" id="menu">
+     <div data-simplebar class="h-100">
 
-        <li>
-            <a href="{{route('dashboard')}}">
-                <div class="parent-icon"><i class='bx bx-home-alt'></i>
-                </div>
-                <div class="menu-title">Dashboard</div>
-            </a>
-        </li>
+         <!-- User details -->
 
-        {{-- @php
-            dd('hello');
-            @endphp --}}
 
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class="bx bx-category"></i>
-                </div>
-                <div class="menu-title">Application</div>
-            </a>
-            <ul>
-                {{--  --}}
-                @php
-                $userid=Illuminate\Support\Facades\Auth::user()->USER_ID;
-                            $menumodule = Illuminate\Support\Facades\DB::select(
-                                "select module_id,module_description 
+         <!--- Sidemenu -->
+         <div id="sidebar-menu">
+             <!-- Left Menu Start -->
+             <ul class="metismenu list-unstyled" id="side-menu">
+                 <li class="menu-title">Menu</li>
+
+                 <li>
+                     <a href="index.html" class="waves-effect">
+                         <i class="ri-dashboard-line"></i><span class="badge rounded-pill bg-success float-end">3</span>
+                         <span>Dashboard</span>
+                     </a>
+                 </li>
+
+                 <li>
+                     <a href="calendar.html" class=" waves-effect">
+                         <i class="ri-calendar-2-line"></i>
+                         <span>Calendar</span>
+                     </a>
+                 </li>
+
+                 {{-- email start --}}
+                 <li>
+                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                         <i class="ri-layout-3-line"></i>
+                         <span>Application</span>
+                     </a>
+                     <ul class="sub-menu" aria-expanded="true">
+                         {{--  --}}
+                         @php
+                             $userid = Illuminate\Support\Facades\Auth::user()->USER_ID;
+                             $menumodule = Illuminate\Support\Facades\DB::select(
+                                 "select module_id,module_description 
                                 from sys_module m
                                 where exists(select '' from vw_sys_users_module um where user_id=$userid and um.module_id=m.module_id)
-                                and module_active='Y' order by sequence");
-                        @endphp
-                    
-                    @foreach ($menumodule as $erpmodule)
-                <li>
-                        
-                        <a href="javascript:;" class="has-arrow">
-                            <div class="parent-icon"><i class="bx bx-category"></i>
-                            </div>
-                            <div class="menu-title">{{$erpmodule->module_description}}</div>
-                        </a>
+                                and module_active='Y' order by sequence",
+                             );
+                         @endphp
 
-                    <ul>
+                         @foreach ($menumodule as $erpmodule)
+                             <li>
 
-                            @php
-                            $moduleid=$erpmodule->module_id;
-                            $menudata = Illuminate\Support\Facades\DB::select(
-                                "select ACTION_RUNTIME,ACTION_NAME from vw_sys_users_module where module_id='$moduleid' and active='Y' and is_allow='Y' and user_id=$userid order by seq");
-                            @endphp
+                                 <a href="javascript: void(0);" class="has-arrow">{{ $erpmodule->module_description }}</a>
+                                    
+                                 <ul class="sub-menu" aria-expanded="true">
 
-                        @foreach ($menudata as $md)
-                            <li> <a href="{{$md->ACTION_RUNTIME}}"><i
-                                        class='bx bx-radio-circle'></i>{{ $md->ACTION_NAME }}</a>
-                            </li>
-                        @endforeach
-                          
-                    </ul>
-                   
-                </li>
-                 @endforeach
-                {{--  --}}
+                                     @php
+                                         $moduleid = $erpmodule->module_id;
+                                         $menudata = Illuminate\Support\Facades\DB::select(
+                                             "select ACTION_RUNTIME,ACTION_NAME from vw_sys_users_module where module_id='$moduleid' and active='Y' and is_allow='Y' and user_id=$userid order by seq",
+                                         );
+                                     @endphp
+                                    
+                                     @foreach ($menudata as $md)
+                                         <li> <a href="{{ $md->ACTION_RUNTIME }}"><i></i>{{ $md->ACTION_NAME }}</a></li>
+                                     @endforeach
 
-            </ul>
-        </li>
+                                 </ul>
+
+                             </li>
+                         @endforeach
+                         {{--  --}}
+
+                     </ul>
+                 </li>
+                 {{-- email end --}}
+
+                 <li>
+                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                         <i class="ri-layout-3-line"></i>
+                         <span>Layouts</span>
+                     </a>
+                     <ul class="sub-menu" aria-expanded="true">
+                         <li>
+                             <a href="javascript: void(0);" class="has-arrow">Vertical</a>
+                             <ul class="sub-menu" aria-expanded="true">
+                                 <li><a href="layouts-dark-sidebar.html">Dark Sidebar</a></li>
+                                 <li><a href="layouts-compact-sidebar.html">Compact Sidebar</a></li>
+                                 <li><a href="layouts-icon-sidebar.html">Icon Sidebar</a></li>
+                                 <li><a href="layouts-boxed.html">Boxed Layout</a></li>
+                                 <li><a href="layouts-preloader.html">Preloader</a></li>
+                                 <li><a href="layouts-colored-sidebar.html">Colored Sidebar</a></li>
+                             </ul>
+                         </li>
+
+                         <li>
+                             <a href="javascript: void(0);" class="has-arrow">Horizontal</a>
+                             <ul class="sub-menu" aria-expanded="true">
+                                 <li><a href="layouts-horizontal.html">Horizontal</a></li>
+                                 <li><a href="layouts-hori-topbar-light.html">Topbar light</a></li>
+                                 <li><a href="layouts-hori-boxed-width.html">Boxed width</a></li>
+                                 <li><a href="layouts-hori-preloader.html">Preloader</a></li>
+                                 <li><a href="layouts-hori-colored-header.html">Colored Header</a></li>
+                             </ul>
+                         </li>
+                     </ul>
+                 </li>
+
+                 <li class="menu-title">Pages</li>
+
+                 <li>
+                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                         <i class="ri-account-circle-line"></i>
+                         <span>Authentication</span>
+                     </a>
+                     <ul class="sub-menu" aria-expanded="false">
+                         <li><a href="auth-login.html">Login</a></li>
+                         <li><a href="auth-register.html">Register</a></li>
+                         <li><a href="auth-recoverpw.html">Recover Password</a></li>
+                         <li><a href="auth-lock-screen.html">Lock Screen</a></li>
+                     </ul>
+                 </li>
+
+                 <li>
+                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                         <i class="ri-profile-line"></i>
+                         <span>Utility</span>
+                     </a>
+                     <ul class="sub-menu" aria-expanded="false">
+                         <li><a href="pages-starter.html">Starter Page</a></li>
+                         <li><a href="pages-timeline.html">Timeline</a></li>
+                         <li><a href="pages-directory.html">Directory</a></li>
+                         <li><a href="pages-invoice.html">Invoice</a></li>
+                         <li><a href="pages-404.html">Error 404</a></li>
+                         <li><a href="pages-500.html">Error 500</a></li>
+                     </ul>
+                 </li>
 
 
-        <li class="menu-label">UI Elements</li>
-
-        <li>
-            <a href="javascript:;" class="has-arrow">
-                <div class="parent-icon"><i class='bx bx-cart'></i>
-                </div>
-                <div class="menu-title">eCommerce</div>
-            </a>
-            <ul>
-                <li> <a href="route('SEC_0003.index')"><i class='bx bx-radio-circle'></i>Products</a>
-                </li>
-                <li> <a href="ecommerce-products-details.html"><i class='bx bx-radio-circle'></i>Product Details</a>
-                </li>
-
-            </ul>
-        </li>
-        <li>
-            <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class='bx bx-bookmark-heart'></i>
-                </div>
-                <div class="menu-title">Components</div>
-            </a>
-            <ul>
-                <li> <a href="component-alerts.html"><i class='bx bx-radio-circle'></i>Alerts</a>
-                </li>
-                <li> <a href="component-accordions.html"><i class='bx bx-radio-circle'></i>Accordions</a>
-                </li>
-
-            </ul>
-        </li>
 
 
-        <li class="menu-label">Others</li>
 
 
-        <li>
-            <a href="#" target="_blank">
-                <div class="parent-icon"><i class="bx bx-support"></i>
-                </div>
-                <div class="menu-title">Support</div>
-            </a>
-        </li>
-    </ul>
-    <!--end navigation-->
-</div>
+             </ul>
+         </div>
+         <!-- Sidebar -->
+     </div>
+ </div>

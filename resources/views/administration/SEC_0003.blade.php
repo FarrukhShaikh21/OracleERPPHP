@@ -20,15 +20,15 @@
     <hr/>
     <div class="card">
         <div class="card-body">
-            <div class="table-responsive">
-                <table id="example" class="table table-striped table-bordered" style="width:99%">
+            
+                <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
                         <tr>
                             <th>S.No</th>
                             <th>User Code</th>
-                            <th>User Name</th>
+                            {{-- <th>User Name</th> --}}
                             <th>Email</th>
-                            <th>Mobile</th>
+                            <th width="0%">Mobile</th>
                             <th>Lock</th>
                             <th>Action</th>
                         </tr>
@@ -38,7 +38,7 @@
                         <tr>
                             <td>{{ $key+1 }}</td>
                              <td>{{ $record->USER_CODE }}</td>
-                             <td>{{ $record->USER_NAME }}</td>
+                             {{-- <td>{{ $record->USER_NAME }}</td> --}}
                              <td>{{ $record->EMAIL }}</td>
                             <td>{{ $record->MOBILE_NO }}</td>
                              <td>{{ $record->IS_LOCK }}</td>
@@ -49,7 +49,7 @@
                     </tbody>
                  
                 </table>
-            </div>
+            
         </div>
     </div>
      
