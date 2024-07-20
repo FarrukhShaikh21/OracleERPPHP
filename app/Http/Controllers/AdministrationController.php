@@ -12,7 +12,9 @@ use Illuminate\Http;
 use App\Models\User;
 use App\Models\Setup\SetGender;
 use App\Models\Setup\SmCountry;
-
+use App\Models\SysPasswordPolicyHeader;
+use App\Models\SysUserPasswordPolicy;
+use Illuminate\Support\Facades\Validator;
 class AdministrationController extends Controller
 {
     public function index(Request $request): View
@@ -38,29 +40,79 @@ class AdministrationController extends Controller
             $tabledata = User::findOrFail($recordid);
             $erpgender = new SetGender();
             $erpcountry = new SmCountry();
+            $erppolicy = new SysPasswordPolicyHeader();
+            $erpuserpolicy = new SysUserPasswordPolicy();
             $erpgender=$erpgender->getGenderList();
             $erpcountry=$erpcountry->getCountryList();
+            $erppolicy=$erppolicy->getPasswordPolicyList();
+            $erpuserpolicy=$erpuserpolicy->getUserPasswordPolicyList($recordid);
+            
             //  dd($erpgender);
             $erppoplists = [
                 "genderlov"=>$erpgender,
-                "countrylov"=>$erpcountry
+                "countrylov"=>$erpcountry,
+                "policylov"=>$erppolicy
+            ];
+
+            $erpdetails = [
+                "userpolicydetail"=>$erpuserpolicy
             ];
             // dd($erpgender);
             // dd($erppoplists["genderlist"]);
 
  
         }
-        return view('administration.' . $formname, compact('tabledata','erppoplists'));
+        return view('administration.' . $formname, compact('tabledata','erppoplists','erpdetails'));
     }
 
     public function update(Request $request)
     {
-        //public function update(ContactRequest $request, Contact $contact)
-       // {
-        
+        // dd($request);
        $validatedData = $request->validate([
-        'CNIC_NO' => 'required|min:13|max:13'
+        'USER_CODE'  => 'required|max:20|unique:SYS_USERS,USER_CODE,'.$request->USER_ID.',USER_ID',
+        'CNIC_NO'    => 'required|min:13|max:13',
+        'EMAIL'      => 'required',
+        'FIRST_NAME' => 'required',
+        'LAST_NAME'  => 'required'
+    ],
+    [
+        'USER_CODE.required' => 'Please Enter Valid User Code',
+        'USER_CODE.max'     => 'Login ID should not be greater than 20 characters',
+        'USER_CODE.unique' => 'This User Code is already used.',
+        'CNIC_NO.required' => 'Please Enter valid CNIC No',
+        'CNIC_NO.min' => 'CNIC No Should be 13 Characters',
+        'CNIC_NO.max' => 'CNIC No Should not be greater 13 Characters',
+        'EMAIL.required' => 'Please Enter Valid Email',
+        'FIRST_NAME.required' => 'Please Enter First Name',
+        'LAST_NAME.required' => 'Please Enter Last Name'
     ]);
+    // dd($validatedData);
+    /*
+    $validator = Validator::make($request->all(), [
+        'USER_CODE' => 'required|unique:SYS_USERS,USER_CODE,'.$request->USER_ID.',USER_ID',
+        'CNIC_NO' => 'required|min:13|max:13'
+    ],
+    [
+        'USER_CODE.required' => 'Please Enter Valid User Code',
+        'USER_CODE.unique' => 'This user code is already used.',
+        'CNIC_NO.required' => 'Please Enter valid CNIC No',
+        'CNIC_NO.min' => 'CNIC No Should be 13 Characters',
+        'CNIC_NO.max' => 'CNIC No Should not be greater 13 Characters'
+    ]
+);
+
+$notification = array(
+    'message' => $validator->errors(),
+    'alert-type' => 'error'
+);
+
+if ($validator->fails()) {
+    return redirect()->back()->withErrors(['USER_CODE' => 'Invalid email address.'])
+    ->withInput()
+    ->with($notification);
+}*/
+    
+    
     //    dd($request->getPathInfo());
             // $request->validate($this->rules());
             $record=User::findOrFail($request->USER_ID);

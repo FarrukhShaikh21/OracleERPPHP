@@ -39,7 +39,7 @@
                                  "select module_id,module_description 
                                 from sys_module m
                                 where exists(select '' from vw_sys_users_module um where user_id=$userid and um.module_id=m.module_id)
-                                and module_active='Y' order by sequence",
+                                and module_active='Y' and 2=1 order by sequence",
                              );
                          @endphp
 
@@ -53,7 +53,7 @@
                                      @php
                                          $moduleid = $erpmodule->module_id;
                                          $menudata = Illuminate\Support\Facades\DB::select(
-                                             "select ACTION_RUNTIME,ACTION_NAME from vw_sys_users_module where module_id='$moduleid' and active='Y' and is_allow='Y' and user_id=$userid order by seq",
+                                             "select ACTION_RUNTIME,ACTION_NAME from vw_sys_users_module where module_id='$moduleid' and active='Y' and is_allow='Y' and user_id=$userid and 2=1 order by seq",
                                          );
                                      @endphp
                                     

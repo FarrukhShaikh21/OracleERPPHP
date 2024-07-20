@@ -1,8 +1,17 @@
 @extends('admin.admin_dashboard')
 @section('admin')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   
     <div class="page-content">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="container">
             <div class="main-body">
                 <div class="row">
@@ -31,7 +40,8 @@
                                 </li>
 
                             </ul>
-                            <form action="/sec/SEC_0003_EDIT/update" method="POST" enctype="multipart/form-data">
+                            <form action="/sec/SEC_0003_EDIT/update" method="POST" enctype="multipart/form-data"
+                                class="needs-validation" novalidate>
                                 @csrf
                                 <div class="tab-content py-3">
                                     <div class="tab-pane fade active show" id="primaryhome" role="tabpanel">
@@ -55,42 +65,76 @@
                                                         </div>
 
 
-
                                                         <div class="col-md-6">
-                                                            <label for="USER_CODE" class="form-label">User Code</label>
-                                                            <div class="input-group">
-                                                                <input type="text" value={{ $tabledata->USER_CODE }}
-                                                                    class="form-control" id="USER_CODE" name="USER_CODE"
-                                                                    placeholder="User Code">
+                                                            <div class="mb-3 position-relative">
+                                                                <label for="USER_CODE" class="form-label">Login Id</label>
+                                                                <div class="input-group">
+                                                                    <input type="text"
+                                                                        class="form-control @error('USER_CODE') is-invalid @enderror"
+                                                                        id="USER_CODE" name="USER_CODE"
+                                                                        placeholder="Login Id" maxlength="20"
+                                                                        value="{{ old('USER_CODE', $tabledata->USER_CODE) }}"
+                                                                        aria-describedby="User Code">
+                                                                    @error('USER_CODE')
+                                                                        <div class="invalid-tooltip">{{ $message }}</div>
+                                                                    @enderror
+                                                                </div>
                                                             </div>
                                                         </div>
 
+
                                                         <div class="col-md-6">
-                                                            <label for="FIRST_NAME" class="form-label">First Name</label>
-                                                            <div class="input-group">
-                                                                <input type="text" maxlength="15"
-                                                                    value="{{ old('FIRST_NAME', $tabledata->FIRST_NAME) }}"
-                                                                    class="form-control" id="FIRST_NAME" name="FIRST_NAME"
-                                                                    placeholder="First Name">
+                                                            <div class="mb-3 position-relative">
+                                                                <label for="FIRST_NAME" class="form-label">First
+                                                                    Name</label>
+                                                                <div class="input-group">
+                                                                    <input type="text"
+                                                                        class="form-control @error('FIRST_NAME') is-invalid @enderror"
+                                                                        id="FIRST_NAME" name="FIRST_NAME"
+                                                                        placeholder="First Name"
+                                                                        value="{{ old('FIRST_NAME', $tabledata->FIRST_NAME) }}"
+                                                                        aria-describedby="First Name">
+                                                                    @error('FIRST_NAME')
+                                                                        <div class="invalid-tooltip">{{ $message }}</div>
+                                                                    @enderror
+                                                                </div>
                                                             </div>
                                                         </div>
+
                                                         <div class="col-md-6">
-                                                            <label for="LAST_NAME" class="form-label">Last Name</label>
-                                                            <div class="input-group">
-                                                                <input type="text" maxlength="15"
-                                                                    value="{{ old('LAST_NAME', $tabledata->LAST_NAME) }}"
-                                                                    class="form-control" name="LAST_NAME"
-                                                                    placeholder="Last Name">
+                                                            <div class="mb-3 position-relative">
+                                                                <label for="LAST_NAME" class="form-label">Last Name</label>
+                                                                <div class="input-group">
+                                                                    <input type="text"
+                                                                        class="form-control @error('LAST_NAME') is-invalid @enderror"
+                                                                        id="LAST_NAME" name="LAST_NAME"
+                                                                        placeholder="Last Name"
+                                                                        value="{{ old('LAST_NAME', $tabledata->LAST_NAME) }}"
+                                                                        aria-describedby="Last Name">
+                                                                    @error('LAST_NAME')
+                                                                        <div class="invalid-tooltip">{{ $message }}</div>
+                                                                    @enderror
+                                                                </div>
                                                             </div>
                                                         </div>
+
                                                         <div class="col-md-6">
-                                                            <label for="EMAIL" class="form-label">Email</label>
-                                                            <div class="input-group">
-                                                                <input type="text" name="EMAIL" id="EMAIL"
-                                                                    value="{{ old('EMAIL', $tabledata->EMAIL) }}"
-                                                                    class="form-control" id="EMAIL" placeholder="Email">
+                                                            <div class="mb-3 position-relative">
+                                                                <label for="EMAIL" class="form-label">Email</label>
+                                                                <div class="input-group">
+                                                                    <input type="text"
+                                                                        class="form-control @error('EMAIL') is-invalid @enderror"
+                                                                        id="EMAIL" name="EMAIL" type="email"
+                                                                        placeholder="Email"
+                                                                        value="{{ old('EMAIL', $tabledata->EMAIL) }}"
+                                                                        aria-describedby="User Code">
+                                                                    @error('EMAIL')
+                                                                        <div class="invalid-tooltip">{{ $message }}</div>
+                                                                    @enderror
+                                                                </div>
                                                             </div>
                                                         </div>
+
                                                         <div class="col-md-6">
                                                             <label for="PASSWORDD" class="form-label">Password</label>
                                                             <div class="input-group">
@@ -145,19 +189,19 @@
 
 
                                                         <div class="col-md-6">
-                                                            <label for="CNIC_NO" class="form-label">CNIC No</label>
-                                                            <div class="input-group">
-                                                                <input
-                                                                    title="CNIC Should be 13 characters with out dashes '-' "
-                                                                    type="text"
-                                                                    class="form-control @error('CNIC_NO') is-invalid @enderror"
-                                                                    value="{{ old('CNIC_NO', $tabledata->CNIC_NO) }}"
-                                                                    id="cnic_no" name="CNIC_NO" placeholder="CNIC NO">
-
-                                                                @error('CNIC_NO')
-                                                                    <div class="invalid-feedback">{{ $message }}</div>
-                                                                @enderror
-
+                                                            <div class="mb-3 position-relative">
+                                                                <label for="CNIC_NO" class="form-label">CNIC No</label>
+                                                                <div class="input-group">
+                                                                    <input type="text"
+                                                                        class="form-control @error('CNIC_NO') is-invalid @enderror"
+                                                                        id="CNIC_NO" name="CNIC_NO"
+                                                                        placeholder="CNIC No"
+                                                                        value="{{ old('CNIC_NO', $tabledata->CNIC_NO) }}"
+                                                                        aria-describedby="User Code">
+                                                                    @error('CNIC_NO')
+                                                                        <div class="invalid-tooltip">{{ $message }}</div>
+                                                                    @enderror
+                                                                </div>
                                                             </div>
                                                         </div>
 
@@ -250,12 +294,11 @@
                                                             <label for="USER_TYPE_SNO" class="form-label">User
                                                                 Type</label>
                                                             <div class="input-group">
-                                                                <span class="input-group-text"><i
-                                                                        class='bx bx-pin'></i></span>
-                                                                <input type="text" class="form-control"
-                                                                    value={{ $tabledata->USER_TYPE_SNO }}
-                                                                    name="USER_TYPE_SNO" id="USER_TYPE_SNO"
-                                                                    placeholder="User Type">
+                                                                <select class="form-select" id="USER_TYPE_SNO"
+                                                                    name="USER_TYPE_SNO">
+                                                                    <option value="1">Administrator</option>
+                                                                    <option value="2">Guest</option>
+                                                                </select>
                                                             </div>
                                                         </div>
 
@@ -315,8 +358,41 @@
                                     <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
                                         <div class="card">
                                             <div class="card-body">
-                                               
+                                                <i
+                                                    class="btn btn-secondary btn-rounded waves-effect waves-light fas fa-plus-circle addeventmore">
+                                                    Add More</i>
+                                                <table id="pwdpolicy" class="table-sm table-bordered" width="100%" style="border-color: #ddd;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="90%">Policy</th>
+                                                            <th width="10%">Action</th>
+                                                        </tr>
 
+                                                    </thead>
+
+                                            <tbody id="addRow" class="addRow">
+                                            @foreach($erpdetails['userpolicydetail'] as $key => $detail)
+                                            <tr class="delete_add_more_item" id="delete_add_more_item">
+                                            <td width="90%">
+                                            
+                                            <select class="form-select" id="POLICY_HEADER_SNO" name="POLICY_HEADER_SNO[]">
+                                            <option selected>Select Policy</option>
+                                            @foreach ($erppoplists['policylov'] as $key => $record)
+                                            <option value={{ $record->POLICY_HEADER_SNO }}
+                                            {{ $record->POLICY_HEADER_SNO == $detail->POLICY_HEADER_SNO ? 'selected' : '' }}>
+                                            {{ $record->POLICY_NAME }}</option>
+                                            @endforeach
+                                            </select>
+                                            </td>
+
+                                            <td width="10%">
+                                                <i class="btn btn-danger btn-sm fas fa-window-close removeeventmore"></i>
+                                            </td>        
+                                                    </tr>
+                                            @endforeach        
+                                                    </tbody>
+
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
@@ -333,18 +409,46 @@
         </div>
     </div>
 
+    <script id="document-template" type="text/x-handlebars-template">
+    <tr class="delete_add_more_item" id="delete_add_more_item">
+        <td width="90%">
+           
+            <select class="form-select" id="POLICY_HEADER_SNO" name="POLICY_HEADER_SNO[]">
+             <option selected>Select Policy</option>
+              @foreach ($erppoplists['policylov'] as $key => $record)
+              <option value={{ $record->POLICY_HEADER_SNO }}
+              {{ $record->POLICY_HEADER_SNO == $tabledata->POLICY_HEADER_SNO ? 'selected' : '' }}>
+              {{ $record->POLICY_NAME }}</option>
+              @endforeach
+            </select>
+           
+            
+        </td>
+        <td width="10%">
+        <i class="btn btn-danger btn-sm fas fa-window-close removeeventmore"></i>
+    </td>
+    </tr>
+    </script>
+
     <script type="text/javascript">
         $(document).ready(function() {
-            var counter = 0;
             $(document).on("click", ".addeventmore", function() {
-                var whole_extra_item_add = $("#whole_extra_item_add").html();
-                $(this).closest(".add_item").append(whole_extra_item_add);
-                counter++;
+                var source = $("#document-template").html();
+                var tamplate = Handlebars.compile(source);
+                var data = {
+                    
+                };
+
+                var html = tamplate(data);
+                $("#addRow").append(html);
             });
-            $(document).on("click", ".removeeventmore", function(event) {
-                $(this).closest("#basic_facility_section_remove").remove();
-                counter -= 1
-            });
+
+        $(document).on("click",".removeeventmore",function(event){
+            $(this).closest(".delete_add_more_item").remove();
+        });
+
+            // Calculate sum of amout in invoice 
+
         });
     </script>
 @endsection
