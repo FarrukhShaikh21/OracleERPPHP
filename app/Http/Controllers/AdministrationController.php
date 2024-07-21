@@ -86,6 +86,16 @@ class AdministrationController extends Controller
         'FIRST_NAME.required' => 'Please Enter First Name',
         'LAST_NAME.required' => 'Please Enter Last Name'
     ]);
+
+    $count_policy_det = count($request->POLICY_HEADER_SNO);
+           for ($i=0; $i < $count_policy_det ; $i++) {
+            $userpwdpolicy = new SysUserPasswordPolicy(); 
+            $userpwdpolicy->POLICY_HEADER_SNO = $request->POLICY_HEADER_SNO[$i];
+            $userpwdpolicy->CREATED_BY = Auth::user()->USER_ID;
+            $userpwdpolicy->IS_ACTIVE = 'Y';
+            $userpwdpolicy->USER_SNO = $request->USER_ID; 
+            $userpwdpolicy->save();
+           }
     // dd($validatedData);
     /*
     $validator = Validator::make($request->all(), [

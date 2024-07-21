@@ -373,7 +373,9 @@
                                             <tbody id="addRow" class="addRow">
                                             @foreach($erpdetails['userpolicydetail'] as $key => $detail)
                                             <tr class="delete_add_more_item" id="delete_add_more_item">
+
                                             <td width="90%">
+                                            <input type="hidden" id="USER_PASSWORD_POLICY_SNO" name="USER_PASSWORD_POLICY_SNO[]" value={{$detail->USER_PASSWORD_POLICY_SNO}}>
                                             
                                             <select class="form-select" id="POLICY_HEADER_SNO" name="POLICY_HEADER_SNO[]">
                                             <option selected>Select Policy</option>
@@ -412,6 +414,7 @@
     <script id="document-template" type="text/x-handlebars-template">
     <tr class="delete_add_more_item" id="delete_add_more_item">
         <td width="90%">
+        <input type="hidden" name="USER_PASSWORD_POLICY_SNO[]" value="">
            
             <select class="form-select" id="POLICY_HEADER_SNO" name="POLICY_HEADER_SNO[]">
              <option selected>Select Policy</option>
